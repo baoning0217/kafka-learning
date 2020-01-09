@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xishanqu.kafka.mapper.ProductMapper">
+    <resultMap id="BaseResultMap" type="com.xishanqu.kafka.entity.Product">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="sid" property="sid" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="DOUBLE"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="shop_id" property="shopId" jdbcType="VARCHAR"/>
+        <result column="show_style" property="showStyle" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
+    <!--  增加  -->
+    <insert id="add" parameterType="com.xishanqu.kafka.entity.Product" useGeneratedKeys="true" keyProperty="id">
+        insert into t_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="sid != null">
+                sid,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="shopId != null">
+                shop_id,
+            </if>
+            <if test="showStyle != null">
+                show_style,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id, jdbcType=INTEGER},
+            </if>
+            <if test="sid != null">
+                #{sid, jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description, jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price, jdbcType=DOUBLE},
+            </if>
+            <if test="status != null">
+                #{status, jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                #{content, jdbcType=VARCHAR},
+            </if>
+            <if test="shopId != null">
+                #{shopId, jdbcType=VARCHAR},
+            </if>
+            <if test="showStyle != null">
+                #{showStyle, jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime, jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <!--  getBySid  -->
+    <select id="getBySid" resultType="com.xishanqu.kafka.entity.Product" parameterType="string">
+        SELECT * FROM t_product where sid = #{sid, jdbcType=VARCHAR}
+    </select>
+
+    <!-- 更新特殊门店 -->
+    <update id="updateSpecialShop" parameterType="string">
+        UPDATE t_product
+        SET show_style = 3
+        WHERE shop_id = #{shopId, jdbcType=VARCHAR}
+    </update>
+
+
+</mapper>
